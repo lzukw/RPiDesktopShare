@@ -1,0 +1,4 @@
+ssid=*ToBeReplaceByShellScript*
+bssid=*ToBeReplaceByShellScript*
+freq=*ToBeReplaceByShellScript*
+ip_address=*ToBeReplaceByShellScript*

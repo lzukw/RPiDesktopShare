@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RPi Desktop Share</title>
+    <meta charset="utf-8">
+    <!--CSS and Javascript for Bootstrap-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+    <!--Either the video-Element or the next div-Element is displayed, the other is hidden-->
+    <video id="video_stream" width="100%" style="display: none;"></video>
+    
+    <div id="div_instruction" style="display: '';">
+      <div class="container">
+        <h2>RPi Desktop Share</h2>
+      </div>
+
+      <div class="container">
+        <ul class="list-group">
+          
+          <li class="list-group-item">
+            <h3>1. Connect to correct WLAN:</h3>
+            <p>Please connect to WLAN with SSID: 
+              <strong style="font-size: large;">
+                <span id="wifi_ssid">SSID_Placeholder</span>
+              </strong>
+            </p>
+            <p>Allthough not strictly required, connecting to the right WLAN speeds up 
+              your connection and prevents network traffic travelling through the 
+              whole network (building).</p>
+          </li>
+
+          <li class="list-group-item">
+            <h3>2. Use your Web-Browser to connect:</h3>
+            <p>Open Firefox, Chrome, etc. and type in the address-bar on of the 
+              following addresses (use one which serves for you):</p>
+            <strong>
+              <ul style="font-size: large;"> 
+                <li id="url_0">Placeholder URL 1</li>
+                <li id="url_1">Placeholder URL 2</li>
+                <li id="url_2">Placeholder URL 3</li>
+                <li id="url_3">Placeholder URL 4</li>
+              </ul>
+            </strong>
+          </li>
+
+          <li class="list-group-item">
+            <h3>3. Push Connect Button in your Web-Browser</h3>
+          </li>
+
+          <li class="list-group-item">
+            <h3>4. Allow the Web-Browser access a window or the full desktop</h3>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="container">
+        <h3>Advanced:</h3>
+        <h4>WLAN - Info:</h4>
+        <pre id="pre_wlan_info"></pre>
+        <h4>Debugging-Log:</h4>
+        <pre id="pre_logoutput"></pre>
+      </div>
+
+    </div>
+
+    <script src="/local_streaming_sink/fill_placeholders.js"></script>
+  </body>
+</html>

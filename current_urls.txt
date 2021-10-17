@@ -1,0 +1,3 @@
+*URL with IP ToBeReplaceByShellScript*
+*URL with Hostname ToBeReplaceByShellScript*
+*URL with Hostname.local ToBeReplaceByShellScript*

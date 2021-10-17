@@ -1,4 +1,11 @@
+############ Manually added #######################################
 
+# Files changed by shellscript (run with root-rights)
+current_ssid.txt
+current_urls.txt
+current_wlan_info.txt
+
+############# Auto-generated ######################################
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
