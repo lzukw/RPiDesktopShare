@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>RPi Desktop Share</title>
+    <meta charset="utf-8">
+    <!--CSS and Javascript for Bootstrap-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+    <div class="container">
+      <h2>RPi Desktop Share</h2>
+    </div>
+
+    <div class="container">
+      <ul class="list-group">
+
+        <li class="list-group-item">
+          <h3>3. Push Connect Button</h3>
+          <p> This will connect you to the partner-computer</p>
+          <button id="connect" type="button" class="btn btn-primary">Connect</button>
+        </li>
+
+        <li class="list-group-item">
+          <h3>4. Allow Browser-access</h3>
+          <p>Your browser will ask you to share a window or a whole screen.</p>
+          <p>Grant access.</p>
+          <video id="localstream" autoplay playsinline controls="false" style="width: 15%;"></video>
+        </li>
+
+        <li class="list-group-item">
+          <h3>3. After streaming - Disconnect</h3>
+          <p>To stop streaming either just close the browser-tab or click the Disconnect-button.</p>
+          <button id="disconnect" type="button" class="btn btn-primary">Disconnect</button>
+        </li> 
+        
+      </ul>
+    </div>
+
+    <div class="container">
+      <h3>Advanced - Debugging-Log</h3>
+      <pre id="logoutput"></pre>
+    </div>
+  
+  <script src="streaming_source.js"></script>
+  </body>
+</html>
