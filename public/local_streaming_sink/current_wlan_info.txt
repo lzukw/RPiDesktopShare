@@ -1,0 +1,4 @@
+ssid=*Placeholder for SSID*
+bssid=*Placeholder for BSSID*
+freq=*Placeholder for Frequency*
+ip_address=*Placeholder for IP-Address*

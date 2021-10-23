@@ -11,10 +11,11 @@
   </head>
   <body>
 
-    <!--Either the video-Element or the next div-Element is displayed, the other is hidden-->
-    <video id="video_stream" width="100%" style="display: none;"></video>
+    <!--Either the video-Element or the next div#instruction-Element is displayed,
+      the other is hidden (by streamin_sink.js) -->
+    <video id="remote_stream" width="100%"></video>
     
-    <div id="div_instruction" style="display: '';">
+    <div id="instruction">
       <div class="container">
         <h2>RPi Desktop Share</h2>
       </div>
@@ -62,9 +63,9 @@
       <div class="container">
         <h3>Advanced:</h3>
         <h4>WLAN - Info:</h4>
-        <pre id="pre_wlan_info"></pre>
+        <pre id="wlan_info"></pre>
         <h4>Debugging-Log:</h4>
-        <pre id="pre_logoutput"></pre>
+        <pre id="logoutput"></pre>
       </div>
 
     </div>

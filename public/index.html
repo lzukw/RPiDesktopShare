@@ -21,19 +21,20 @@
         <li class="list-group-item">
           <h3>3. Push Connect Button</h3>
           <p> This will connect you to the partner-computer</p>
-          <button id="btn_connect" type="button" class="btn btn-primary">Connect</button>
+          <button id="connect" type="button" class="btn btn-primary">Connect</button>
         </li>
 
         <li class="list-group-item">
           <h3>4. Allow Browser-access</h3>
           <p>Your browser will ask you to share a window or a whole screen.</p>
           <p>Grant access.</p>
+          <video id="localstream" autoplay playsinline controls="false" style="width: 15%;"></video>
         </li>
 
         <li class="list-group-item">
           <h3>3. After streaming - Disconnect</h3>
           <p>To stop streaming either just close the browser-tab or click the Disconnect-button.</p>
-          <button id="btn_disconnect" type="button" class="btn btn-primary">Disconnect</button>
+          <button id="disconnect" type="button" class="btn btn-primary">Disconnect</button>
         </li> 
         
       </ul>
@@ -41,7 +42,7 @@
 
     <div class="container">
       <h3>Advanced - Debugging-Log</h3>
-      <pre id="pre_logoutput"></pre>
+      <pre id="logoutput"></pre>
     </div>
   
   <script src="streaming_source.js"></script>

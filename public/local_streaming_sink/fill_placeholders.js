@@ -1,29 +1,27 @@
 "use strict";
 
+// HTML-Elements  
+let log_elt = null;
+let wifi_ssid_elt = null;
+let pre_wlan_info = null;
+
 /**
  * Fetches the WLAN-SSID of the server via a GET-Request to
  * "/local_streaming_sink/ssid" and puts the result in the
  * HTML-Element with id="wifi_ssid"
  */
 async function fillInSsid() {
-
-  let log_elt = document.getElementById("pre_logoutput");
-  let wifi_ssid_elt = document.getElementById("wifi_ssid");
   
   try {
-    let response = await fetch("/local_streaming_sink/ssid");
+    let response = await fetch("/local_streaming_sink/current_ssid.txt");
     if (response.status != 200) {
-      log_elt.innerText += `fill_placeholders.js: fetch to '/local_streaming_sink/ssid' returned with status ${response.status}`;
-      return;
+      throw new Error(`Response status: ${response.status}`);
     };
-
-    let fetchedObject = await response.json();
-
-    wifi_ssid_elt.innerText = fetchedObject["ssid"];
+    let fetchedObject = await response.text();
+    wifi_ssid_elt.innerHTML = fetchedObject;
   }
-
   catch (error) {
-    log_elt.innerText += `fetch to '/local_streaming_sink/ssid' failed: ${reason}\n`;
+    log_elt.innerText += `fetching /local_streaming_sink/current_ssid.txt failed: ${error}\n`;
   }
 }
 
@@ -33,24 +31,23 @@ async function fillInSsid() {
  * ids "url_1" ..."url_4"
  */
 async function fillInUrls() {
-  
-  let log_elt = document.getElementById("pre_logoutput");
-
   try {
-
-    let response = await fetch("/local_streaming_sink/urls")
-    
+    let response = await fetch("/local_streaming_sink/current_urls.txt")
     if (response.status != 200) {
-      log_elt.innerText += `fill_placeholders.js: fetch to '/local_streaming_sink/urls' returned with status ${response.status}\n`;
-        return;
+      throw new Error(`Response status: ${response.status}`);
     };
-
-    let fetchedObject = await response.json();  
-    let urls = fetchedObject.urls;
-    if (!urls) urls=[];
+    let fetchedUrls = await response.text();  
+    
+    let urls;
+    try {
+      urls = fetchedUrls.split("\n");
+    }
+    catch {
+      urls=[];
+    }
 
     for (let i=0; i<4; i++) {
-      let elt = document.getElementById(`url_${i}`);
+      let elt = document.querySelector(`li#url_${i}`);
       if (i < urls.length) {
         elt.innerHTML=urls[i];
         elt.style.display="";
@@ -61,34 +58,36 @@ async function fillInUrls() {
       }
     }  
   }
-
   catch (error) {
-    log_elt.innerText += `fetch to '/local_streaming_sink/urls' failed: ${error}\n`;
+    log_elt.innerText += `fetch to '/local_streaming_sink/current_urls.txt' failed: ${error}\n`;
   }
 }
 
 async function fillInWlanInfo() {
-
-  let log_elt = document.getElementById("pre_logoutput");
-  let pre_wlan_info = document.getElementById("pre_wlan_info");
-
   try {
-    let response = await fetch("/local_streaming_sink/wlan_info");
+    let response = await fetch("/local_streaming_sink/current_wlan_info.txt");
 
     if (response.status != 200) {
-      log_elt.innerText += `fill_placeholders.js: fetch to '/local_streaming_sink/wlan_info' returned with status ${response.status}\n`;
-        return;
+      throw new Error(`Response status: ${response.status}`);
     };
-    let text = await response.text();
-    pre_wlan_info.innerHTML = text;
+    let wlanInfo = await response.text();
+    pre_wlan_info.innerHTML = wlanInfo;
   }
   catch (error) {
-
+    log_elt.innerText += `fetch to '/local_streaming_sink/current_wlan_info.txt' failed: ${error}\n`;
   }
 }
 
 window.addEventListener("load", ()=>{
-  setInterval(fillInSsid, 3000);
-  setInterval(fillInUrls, 3000);
-  setInterval(fillInWlanInfo, 3000);
+  
+  log_elt = document.querySelector("pre#logoutput");
+  wifi_ssid_elt = document.querySelector("span#wifi_ssid");
+  pre_wlan_info = document.querySelector("pre#wlan_info");
+
+  setInterval( ()=>{
+    fillInSsid();
+    fillInUrls();
+    fillInWlanInfo();
+  }, 5000);
+  
 });
