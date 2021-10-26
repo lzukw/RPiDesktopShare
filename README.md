@@ -9,7 +9,7 @@ Project Status (as of 2021-10-26): Working fine
 - First install `nodejs` and `npm` by running:
 
 ```
-sudp apt install nodejs
+sudo apt install nodejs
 sudo apt install npm
 ```
 
@@ -57,6 +57,8 @@ Note, that the previous step is optional, if you don't need up-to-date info, or 
 - `public/local_streaming_sink/current_ssid.txt`
 - `public/local_streaming_sink/current_urls.txt`
 - `public/local_streaming_sink/current_wlan_info.txt`
+
+Maybe you have to tweak the script `get_wlan_info.sh`. The WLAN-interface is supposed to be `wlan0`. If you are on another Linux-Computer and not on a Raspberry Pi, it would be better to use `nmcli` instead of `wpa_cli`. Then no root-privileges are required.
 
 ## Start the nodejs-webserver and a local browser on the streaming sink
 

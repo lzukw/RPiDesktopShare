@@ -18,10 +18,10 @@ fi
 while :
 do
   # Create current_wlan_info.txt
-  echo "$(wpa_cli status | grep -e "^ssid")" > current_wlan_info.txt
-  echo "$(wpa_cli status | grep -e "^bssid")" >> current_wlan_info.txt
-  echo "$(wpa_cli status | grep -e "^freq")" >> current_wlan_info.txt
-  echo -n "$(wpa_cli status | grep -e "^ip_address")" >> current_wlan_info.txt
+  echo "$(wpa_cli -i wlan0 status | grep -e "^ssid")" > current_wlan_info.txt
+  echo "$(wpa_cli -i wlan0 status | grep -e "^bssid")" >> current_wlan_info.txt
+  echo "$(wpa_cli -i wlan0 status | grep -e "^freq")" >> current_wlan_info.txt
+  echo -n "$(wpa_cli -i wlan0 status | grep -e "^ip_address")" >> current_wlan_info.txt
   chown 1000:1000 current_wlan_info.txt
 
   # Create current_ssid.txt (no root-privileges required)

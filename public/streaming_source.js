@@ -305,8 +305,12 @@ window.addEventListener("load", ()=>{
   // Note that also the user disallowing screen-sharing causes on_btn_disconnect_click
   // to be called, but this callback is added in getMediastream()
   btn_disconnect_elt.addEventListener("click", on_btn_disconnect_click);
-  window.addEventListener("beforeunload", async ()=>{ 
+  window.addEventListener("beforeunload", async ()=>{
     await hangup(); 
+    // according to 
+    // https://stackoverflow.com/questions/7255649/capturing-window-onbeforeunload 
+    // we must return null
+    return null;
   });
 
 });
