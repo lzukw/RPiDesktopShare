@@ -1,14 +1,21 @@
+const fs = require("fs");
 const path = require("path");
 const express = require('express');
+const https = require('https');
 
 // Environment-Variable PORT
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
+// Read private key and certificate for https
+const key = fs.readFileSync(path.join(__dirname,'self-signed.key'), "utf-8");
+const cert = fs.readFileSync(path.join(__dirname,'self-signed.crt'), "utf-8");
+
 // global storage for connection status
 let connectionSatus = {};
 
-// Express
+// Express with https
 const app = express();
+const server = https.createServer({key: key, cert: cert }, app);
 
 // Add static routing of files in directory 'puclic'.
 app.use( express.static(path.join(__dirname, 'public')));
@@ -25,6 +32,6 @@ app.get("/connection_satus", (req, res)=>{
   res.json(connectionSatus);
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`RPiDesktopShare listening on all interfaces on port ${PORT}`);
 });

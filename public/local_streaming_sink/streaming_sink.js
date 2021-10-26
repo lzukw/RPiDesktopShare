@@ -30,6 +30,8 @@ function initPeerConnection() {
     video_elt.style.display="";
     instruction_elt.style.display="none";
     video_elt.srcObject = mediaStream;
+    // video_elt.play() only works after a user interaction or for muted video
+    video_elt.muted = true;
     video_elt.play();
     //video_elt.requestFullscreen(); ...would only work with user consent on streaming-sink
     //              instead browser should be started in fullscreen
