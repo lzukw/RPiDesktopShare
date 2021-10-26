@@ -7,8 +7,8 @@ const https = require('https');
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 // Read private key and certificate for https
-const key = fs.readFileSync(path.join(__dirname,'self-signed.key'), "utf-8");
-const cert = fs.readFileSync(path.join(__dirname,'self-signed.crt'), "utf-8");
+const key = fs.readFileSync(path.join(__dirname,'webserver.key'), "utf-8");
+const cert = fs.readFileSync(path.join(__dirname,'webserver.crt'), "utf-8");
 
 // global storage for connection status
 let connectionSatus = {};

@@ -4,8 +4,9 @@
 
 // HTML-Elements modified by this code
 //let log_elt = null; already declared in fill_placeholders.js
+let video_div_elt = null;
 let video_elt = null;
-let instruction_elt = null;
+let instruction_div_elt = null;
 
 // Global-Variables needed for streaming
 let mediaStream = null;
@@ -26,9 +27,14 @@ function initPeerConnection() {
 
   // This handler will be called later, when the peerConnection is established.
   peerConnection.addEventListener("track", (event)=> {
+    // This is the mediastream received from the remote streaming source
     mediaStream = event.streams[0];
-    video_elt.style.display="";
-    instruction_elt.style.display="none";
+
+    // Setup-HTML-Elements
+    video_div_elt.style.display="";
+    instruction_div_elt.style.display="none";
+
+    // Play mediaStream in <video>-Element
     video_elt.srcObject = mediaStream;
     // video_elt.play() only works after a user interaction or for muted video
     video_elt.muted = true;
@@ -37,7 +43,6 @@ function initPeerConnection() {
     //              instead browser should be started in fullscreen
 
     log_elt.innerHTML += "Got the remote stream, displaying it now...\n";
-    
   });
 
   log_elt.innerHTML += "Beginning to establish an RTCPeerConnection\n";
@@ -123,6 +128,30 @@ async function waitForAndSendConnectedState() {
   log_elt.innerHTML += "RTCPeerConnection established.\n";
 }
 
+async function adjustVideoElementSize() {
+  
+  let localAspectRatio = window.innerWidth / window.innerHeight;
+  
+  // The aspect-ration of the remote-stream is not known immediately
+  // so wait until it becomes available
+  let remoteAspectRatio;
+  do {
+    remoteAspectRatio = mediaStream.getVideoTracks()[0].getSettings().aspectRatio;
+    await delay_ms(1000);
+  } while (! remoteAspectRatio);
+  
+  log_elt.innerHTML += `Remote Aspect-Ratio of stream is ${remoteAspectRatio}. Adjusting Video-Element.\n`;
+
+  if (remoteAspectRatio > localAspectRatio) {
+    video_elt.width = window.innerWidth;
+    video_elt.height = video_elt.width / remoteAspectRatio;
+  }
+  else {
+    video_elt.height = window.innerHeight;
+    video_elt.width = video_elt.height * remoteAspectRatio;
+  }
+}
+
 async function waitForPeerClosingConnection() {
   // wait until peerConnection.connectionState changes from "connected" to something 
   // different (normally to "closing").
@@ -132,8 +161,8 @@ async function waitForPeerClosingConnection() {
     remoteConnectionState = await getRemoteConnectionStateFromServer();
   } while (remoteConnectionState.state == "connected")
 
-  video_elt.style.display="none";
-  instruction_elt.style.display="";
+  video_div_elt.style.display="none";
+  instruction_div_elt.style.display="";
   log_elt.innerHTML += "RTCPeerConnection closed by remote peer\n";
 }
 
@@ -196,8 +225,8 @@ async function restart() {
   // Initialize HTML-Elements
   log_elt.innerHTML = "";
   video_elt.srcObject = null;
-  video_elt.style.display="none";
-  instruction_elt.style.display="";
+  video_div_elt.style.display="none";
+  instruction_div_elt.style.display="";
   
   // initialize global variables
   mediaStream = null;
@@ -219,19 +248,22 @@ async function restart() {
   // because this is already handled by an event-handler, that has already been
   // set up in `initPeerConnection()`.
 
+  // don't await this, it can run "in background"
+  adjustVideoElementSize();
+
   // Wait until the peer closes the connection
   await waitForPeerClosingConnection();
 
   // finally start again 
   setTimeout( restart, 5000);
-
 }
 
 window.addEventListener("load", ()=>{
 
-  log_elt = document.querySelector("pre#logoutput");
   video_elt = document.querySelector("video#remote_stream");
-  instruction_elt = document.querySelector("div#instruction");
+  video_div_elt = document.querySelector("div#video");
+  instruction_div_elt = document.querySelector("div#instruction");
+  log_elt = document.querySelector("pre#logoutput");
 
   restart() ; 
 });

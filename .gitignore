@@ -5,9 +5,9 @@
 /public/local_streaming_sink/current_urls.txt
 /public/local_streaming_sink/current_wlan_info.txt
 
-# fiels for self-signed-certificate
-self-signed.key
-self-signed.crt
+# fiels for X.509-certificate and private key
+webserver.key
+webserver.crt
 
 ############# Auto-generated ######################################
 # Created by https://www.toptal.com/developers/gitignore/api/node
