@@ -130,3 +130,14 @@ The mentioned URL in the error-message leads to [Autoplay policy in Chrome](http
 - Autoplay with sound is allowed if: The user has interacted with the domain (click, tap, etc.).
 
 Adding `video_elt.muted = true` before calling `video_elt.play()` solved the issue.
+
+### Peerconnection not changing to "connected"-state in WLAN at work
+
+2021-11-05: The project only works in my home-WIFI, not at work (WIFI with WPA-Enterprise, and also IPV4 and IPV6). The peer-connection doesn't change from state "new" to state "connected".
+
+While debugging, mores issues were found: 
+- The callback `peerConnection.addEventListener("track", (event)=> { ...}` defined in `streaming_sink.js` is used to start playback of the (remote) video. But this callback is called very very early (directly after receiving an offer, but before sending the answer). 
+- On the streaming-sink-side (`streaming_sink.js`) the peerconnection is never closed, using the `.close()`-method.
+
+The next intent is to use the nodejs-webserver with socket.io for signalling and to first just establish a peer connection and get it into "connected"-state before exchanging offer and answer (JSEP). This intent will be in a branch called "PeerConectionOnly".
+
